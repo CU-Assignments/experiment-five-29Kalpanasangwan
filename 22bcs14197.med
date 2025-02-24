@@ -1,0 +1,74 @@
+import java.io.*;
+class Demo implements java.io.Serializable
+{
+    public int a;
+    public String b;
+    // Default constructor
+    public Demo(int a, String b)
+    {
+        this.a = a;
+        this.b = b;
+    }
+}
+class Test
+{
+    public static void main(String[] args)
+    {   
+        Demo object = new Demo(1, &quot;geeksforgeeks&quot;);
+        String filename = &quot;file.ser&quot;;
+        
+        // Serialization 
+        try
+        {   
+            //Saving of object in a file
+            FileOutputStream file = new FileOutputStream(filename);
+            ObjectOutputStream out = new ObjectOutputStream(file);
+            
+            // Method for serialization of object
+            out.writeObject(object);
+            
+            out.close();
+            file.close();
+            
+            System.out.println(&quot;Object has been serialized&quot;);
+
+        }
+        
+        catch(IOException ex)
+        {
+            System.out.println(&quot;IOException is caught&quot;);
+        }
+
+
+        Demo object1 = null;
+
+        // Deserialization
+        try
+        {   
+            // Reading the object from a file
+            FileInputStream file = new FileInputStream(filename);
+            ObjectInputStream in = new ObjectInputStream(file);
+            
+            // Method for deserialization of object
+            object1 = (Demo)in.readObject();
+            
+            in.close();
+            file.close();
+            
+            System.out.println(&quot;Object has been deserialized &quot;);
+            System.out.println(&quot;a = &quot; + object1.a);
+            System.out.println(&quot;b = &quot; + object1.b);
+        }
+        
+        catch(IOException ex)
+        {
+            System.out.println(&quot;IOException is caught&quot;);
+        }
+        
+        catch(ClassNotFoundException ex)
+        {
+            System.out.println(&quot;ClassNotFoundException is caught&quot;);
+        }
+
+    }
+}
